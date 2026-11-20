@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://atmnearme.github.io/sitemap.xml

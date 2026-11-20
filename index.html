@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATM Near Me — Find an ATM near you: fees, limits and safety</title>
+<meta name="description" content="ATM Near Me: free tools to find an ATM near you, calculate ATM fees, plan cash withdrawals, convert travel currency, and stay safe at the ATM.">
+<meta name="theme-color" content="#1e3a8a">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+:root{--deep:#1e3a8a;--deep2:#2745a3;--accent:#2563eb;--accent-dark:#1d4ed8;--accent-bg:#e0e9fd;--bg:#f1f5fb;--card:#fff;--text:#17233f;--muted:#5b6b8c;--border:#dce4f0;--green:#15803d;--green-bg:#dcfce7;--red:#b91c1c;--red-bg:#fee2e2;--warn-bg:#fef3c7;--warn:#92400e;--radius:14px;--shadow:0 1px 3px rgba(30,58,138,.08),0 4px 14px rgba(30,58,138,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+a{color:var(--accent-dark)}
+header{background:var(--deep);color:#fff;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.header-in{display:flex;align-items:center;gap:14px;padding:13px 16px;max-width:1080px;margin:0 auto;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;flex:1;min-width:200px}
+.brand .mark{width:38px;height:38px;border-radius:9px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px;flex:none}
+.brand b{font-size:19px;letter-spacing:.2px}
+.brand b span{color:#93c5fd}
+.brand small{display:block;font-size:11.5px;color:#a5b8e8;font-weight:400}
+nav.main-nav{display:flex;gap:4px;flex-wrap:wrap}
+nav.main-nav a{color:#c7d6f7;text-decoration:none;font-size:14px;font-weight:600;padding:8px 11px;border-radius:8px}
+nav.main-nav a:hover{background:var(--deep2);color:#fff}
+.hero{background:linear-gradient(135deg,var(--deep) 0%,#2745a3 60%,#3b82f6 100%);color:#fff;padding:44px 0 40px}
+.hero h1{font-size:clamp(26px,5vw,40px);line-height:1.2;max-width:760px}
+.hero h1 span{color:#93c5fd}
+.hero p{color:#d6e2fb;font-size:16px;max-width:720px;margin-top:12px}
+.hero .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.hero .badge{background:rgba(37,99,235,.18);border:1px solid rgba(147,197,253,.45);color:#bfdbfe;font-size:13px;font-weight:600;border-radius:999px;padding:6px 13px}
+section{padding:34px 0 8px}
+section h2{font-size:24px;margin-bottom:6px}
+section h2 .bar{color:var(--accent)}
+.section-sub{color:var(--muted);font-size:15px;max-width:760px;margin-bottom:20px}
+.calc-grid{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:860px){.calc-grid{grid-template-columns:1fr 1fr}.calc-grid .wide{grid-column:1 / -1}}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 20px;border-top:4px solid var(--accent)}
+.card h3{font-size:18px;margin-bottom:2px}
+.card .tag{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-dark)}
+.card .desc{font-size:14px;color:var(--muted);margin:6px 0 16px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px}
+.field label small{font-weight:400;color:var(--muted)}
+.field input,.field select{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:inherit;outline:none;background:#fff;color:var(--text)}
+.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.18)}
+.field-row{display:grid;grid-template-columns:1fr;gap:0 12px}
+@media(min-width:560px){.field-row{grid-template-columns:1fr 1fr}}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:12px 22px;font-size:15px;font-weight:800;min-height:46px;cursor:pointer;font-family:inherit}
+.btn:hover{background:var(--accent-dark)}
+.btn-row{margin-top:4px}
+.results{display:none;margin-top:16px}
+.results.show{display:block}
+.results h4{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:560px){.stat-grid{grid-template-columns:repeat(3,1fr)}}
+.stat{background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
+.stat.hero{background:var(--accent-bg);border-color:#bfdbfe}
+.stat .k{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.stat .v{font-size:19px;font-weight:800;margin-top:3px;word-break:break-word}
+.stat.hero .v{color:#1e3a8a}
+.stat.wide{grid-column:1 / -1}
+.verdict{margin-top:10px;border-radius:10px;padding:11px 14px;font-size:14px;font-weight:600}
+.verdict.ok{background:var(--green-bg);color:var(--green)}
+.verdict.warn{background:var(--warn-bg);color:var(--warn)}
+.verdict.bad{background:var(--red-bg);color:var(--red)}
+.note{font-size:12.5px;color:var(--muted);margin-top:12px}
+.formula{font-size:13px;color:var(--muted);background:#f8fafc;border:1px dashed var(--border);border-radius:8px;padding:8px 11px;margin-top:12px}
+.formula code{color:var(--deep);font-weight:600}
+.table-wrap{overflow-x:auto;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th{background:var(--deep);color:#fff;text-align:left;padding:11px 12px;font-size:13px}
+td{padding:10px 12px;border-bottom:1px solid var(--border)}
+tr:nth-child(even) td{background:#f8fafc}
+.guide-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:640px){.guide-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.guide-grid{grid-template-columns:1fr 1fr 1fr}}
+.guide{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 18px;border-left:4px solid var(--accent)}
+.guide .g-tag{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--accent-dark)}
+.guide h3{font-size:16.5px;margin:5px 0 7px}
+.guide p{font-size:14px;color:#334155}
+.guide-link{margin-top:10px;font-size:14px;font-weight:700}
+.guide-link a{text-decoration:none}
+.guide-link a:hover{text-decoration:underline}
+.faq{max-width:820px}
+.faq-item{background:#fff;border-radius:12px;box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden}
+.faq-item button{width:100%;text-align:left;background:none;border:0;padding:16px 18px;font-size:15.5px;font-weight:700;font-family:inherit;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.faq-item button .chev{color:var(--accent-dark);font-size:20px;flex:none}
+.faq-item .answer{display:none;padding:0 18px 16px;font-size:14.5px;color:#334155}
+.faq-item.open .answer{display:block}
+.faq-item.open .chev{transform:rotate(45deg)}
+.about{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 20px}
+.about p{font-size:14.5px;color:#334155;margin-bottom:10px}
+.disclaimer{background:#fff7e6;border-left:4px solid #d97706;border-radius:10px;padding:14px 16px;margin:22px 0;font-size:14px;color:#7c2d12}
+footer{background:var(--deep);color:#a5b8e8;margin-top:44px;padding:30px 0 26px}
+footer .cols{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:640px){footer .cols{grid-template-columns:2fr 1fr 1fr}}
+footer h4{color:#fff;font-size:15px;margin-bottom:10px}
+footer p,footer a{font-size:13.5px;color:#a5b8e8;text-decoration:none}
+footer a:hover{color:#fff}
+footer ul{list-style:none}
+footer li{margin-bottom:6px}
+.copy{border-top:1px solid #2745a3;margin-top:22px;padding-top:16px;font-size:12.5px;text-align:center}
+.check-list{list-style:none;margin:4px 0 8px}
+.check-list li{margin-bottom:10px;font-size:15px}
+.check-list input{margin-right:9px;transform:scale(1.25);accent-color:var(--accent)}
+.score{font-size:15px;font-weight:700;margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-in">
+    <a class="brand" href=""><span class="mark">$</span><span><b>ATM <span>Near Me</span></b><small>atmnearme.github.io</small></span></a>
+    <nav class="main-nav">
+      <a href="#tools">Tools</a>
+      <a href="#table">Fees &amp; Limits</a>
+      <a href="#guides">Guides</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <h1>Find an <span>ATM near you</span> — fees, limits and safety</h1>
+      <p>ATM Near Me helps you find the closest cash machine, work out exactly what a withdrawal will cost, plan your cash, convert currency when you travel, and stay safe at the machine. Free tools, no sign-up.</p>
+      <div class="badges"><span class="badge">No sign-up</span><span class="badge">5 free tools</span><span class="badge">US banks covered</span><span class="badge">Safety checklist</span></div>
+    </div>
+  </section>
+
+  <section id="tools" class="wrap">
+    <h2><span class="bar">|</span> ATM tools</h2>
+    <p class="section-sub">Free calculators and checklists for cash withdrawals. Everything runs in your browser — no data leaves your device.</p>
+    <div class="calc-grid">
+
+      <div class="card">
+        <p class="tag">Tool 1</p>
+        <h3>ATM Fee Calculator</h3>
+        <p class="desc">See the true cost of a withdrawal, including the ATM fee and what it costs as a percentage.</p>
+        <div class="field-row">
+          <div class="field"><label for="fee-amt">Withdrawal amount ($)</label><input type="number" id="fee-amt" min="1" step="1" placeholder="e.g. 100"></div>
+          <div class="field"><label for="fee-fee">ATM fee ($)</label><input type="number" id="fee-fee" min="0" step="0.5" placeholder="e.g. 3.50"></div>
+        </div>
+        <div class="btn-row"><button class="btn" onclick="calcFee()">Calculate total cost</button></div>
+        <div class="results" id="fee-results">
+          <h4>Result</h4>
+          <div class="stat-grid">
+            <div class="stat hero"><div class="k">Total cost</div><div class="v" id="fee-total">—</div></div>
+            <div class="stat"><div class="k">Fee paid</div><div class="v" id="fee-feeout">—</div></div>
+            <div class="stat"><div class="k">Fee as %</div><div class="v" id="fee-pct">—</div></div>
+          </div>
+          <div class="verdict ok" id="fee-verdict"></div>
+          <p class="formula">Formula: <code>total cost = withdrawal amount + ATM fee</code>. The fee percentage is <code>fee ÷ amount × 100</code>.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="tag">Tool 2</p>
+        <h3>Cash Withdrawal Planner</h3>
+        <p class="desc">Plan how many ATM trips you need each month and what they will cost you in fees.</p>
+        <div class="field-row">
+          <div class="field"><label for="plan-need">Cash needed per month ($)</label><input type="number" id="plan-need" min="1" step="10" placeholder="e.g. 400"></div>
+          <div class="field"><label for="plan-per">Amount per withdrawal ($)</label><input type="number" id="plan-per" min="1" step="10" placeholder="e.g. 200"></div>
+        </div>
+        <div class="field"><label for="plan-fee">Fee per withdrawal ($) <small>— 0 if you use your own bank</small></label><input type="number" id="plan-fee" min="0" step="0.5" value="3"></div>
+        <div class="btn-row"><button class="btn" onclick="calcPlan()">Plan my withdrawals</button></div>
+        <div class="results" id="plan-results">
+          <h4>Your plan</h4>
+          <div class="stat-grid">
+            <div class="stat hero"><div class="k">Withdrawals / month</div><div class="v" id="plan-trips">—</div></div>
+            <div class="stat"><div class="k">Cash withdrawn</div><div class="v" id="plan-cash">—</div></div>
+            <div class="stat"><div class="k">Total fees / month</div><div class="v" id="plan-fees">—</div></div>
+          </div>
+          <div class="verdict ok" id="plan-verdict"></div>
+          <p class="formula">Formula: <code>trips = ceil(monthly need ÷ amount per withdrawal)</code>; <code>total fees = trips × fee</code>.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="tag">Tool 3</p>
+        <h3>Travel Currency Converter</h3>
+        <p class="desc">Convert a withdrawal abroad into your home currency, including the foreign transaction fee.</p>
+        <div class="field-row">
+          <div class="field"><label for="fx-amt">Amount to withdraw (in foreign currency)</label><input type="number" id="fx-amt" min="1" step="1" placeholder="e.g. 200"></div>
+          <div class="field"><label for="fx-rate">Exchange rate (1 foreign unit = ? USD)</label><input type="number" id="fx-rate" min="0" step="0.01" placeholder="e.g. 1.08"></div>
+        </div>
+        <div class="field"><label for="fx-feepct">Foreign transaction fee (%)</label><input type="number" id="fx-feepct" min="0" step="0.5" value="3"></div>
+        <div class="btn-row"><button class="btn" onclick="calcFx()">Convert</button></div>
+        <div class="results" id="fx-results">
+          <h4>Result (in USD)</h4>
+          <div class="stat-grid">
+            <div class="stat hero"><div class="k">Converted amount</div><div class="v" id="fx-converted">—</div></div>
+            <div class="stat"><div class="k">Foreign fee</div><div class="v" id="fx-fee">—</div></div>
+            <div class="stat"><div class="k">Total charged</div><div class="v" id="fx-total">—</div></div>
+          </div>
+          <div class="verdict ok" id="fx-verdict"></div>
+          <p class="formula">Formula: <code>converted = amount × rate</code>; <code>fee = converted × fee %</code>.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="tag">Tool 4</p>
+        <h3>ATM Safety Checklist</h3>
+        <p class="desc">Run through this checklist every time you use an ATM. Tick each item you did.</p>
+        <ul class="check-list" id="safe-list"></ul>
+        <p class="score" id="safe-score">Safety score: 0% (0 of 8 checked)</p>
+        <div class="verdict warn" id="safe-verdict">Run through the checklist before you withdraw cash.</div>
+      </div>
+
+      <div class="card wide">
+        <p class="tag">Tool 5</p>
+        <h3>Bank vs ATM Comparison</h3>
+        <p class="desc">Compare the cost of withdrawing at your own bank's ATM versus an out-of-network ATM, and check the daily limit.</p>
+        <div class="field-row">
+          <div class="field"><label for="cmp-bank">Your bank</label><select id="cmp-bank"><option value="3.0|1000|Chase">Chase — out-of-network fee $3.00, daily limit $1,000</option><option value="2.5|1000|Bank of America">Bank of America — out-of-network fee $2.50, daily limit $1,000</option><option value="3.0|710|Wells Fargo">Wells Fargo — out-of-network fee $3.00, daily limit $710</option><option value="2.5|1500|Citi">Citi — out-of-network fee $2.50, daily limit $1,500</option><option value="2.5|500|U.S. Bank">U.S. Bank — out-of-network fee $2.50, daily limit $500</option><option value="3.0|500|PNC Bank">PNC Bank — out-of-network fee $3.00, daily limit $500</option><option value="0.0|1000|Capital One">Capital One — out-of-network fee $0.00, daily limit $1,000</option><option value="3.0|750|TD Bank">TD Bank — out-of-network fee $3.00, daily limit $750</option></select></div>
+          <div class="field"><label for="cmp-amt">Withdrawal amount ($)</label><input type="number" id="cmp-amt" min="1" step="10" placeholder="e.g. 200"></div>
+        </div>
+        <div class="field"><label for="cmp-oon">Out-of-network ATM fee ($)</label><input type="number" id="cmp-oon" min="0" step="0.5" value="3.50"></div>
+        <div class="btn-row"><button class="btn" onclick="calcCompare()">Compare</button></div>
+        <div class="results" id="cmp-results">
+          <h4>Comparison</h4>
+          <div class="stat-grid">
+            <div class="stat hero"><div class="k">Your bank's ATM</div><div class="v" id="cmp-own">—</div></div>
+            <div class="stat"><div class="k">Out-of-network ATM</div><div class="v" id="cmp-oon-out">—</div></div>
+            <div class="stat"><div class="k">You save</div><div class="v" id="cmp-save">—</div></div>
+            <div class="stat wide"><div class="k">Your daily withdrawal limit</div><div class="v" id="cmp-limit">—</div></div>
+          </div>
+          <div class="verdict ok" id="cmp-verdict"></div>
+          <p class="note">Fees and limits in this tool are approximate estimates. Your bank may also charge its own out-of-network fee on top of the ATM operator's fee.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="table" class="wrap">
+    <h2><span class="bar">|</span> Reference: ATM fees &amp; daily limits by bank</h2>
+    <p class="section-sub">Approximate out-of-network ATM fees and daily ATM withdrawal limits for major US banks. Figures are estimates and can change — check with your bank for the current numbers.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Bank</th><th>Out-of-network ATM fee (approx.)</th><th>Daily withdrawal limit (approx.)</th><th>Notes</th></tr></thead>
+      <tbody><tr><td>Chase</td><td>$3.00</td><td>$1,000</td><td>Fee applies at other banks' ATMs</td></tr><tr><td>Bank of America</td><td>$2.50</td><td>$1,000</td><td>Fee applies at other banks' ATMs</td></tr><tr><td>Wells Fargo</td><td>$3.00</td><td>$710</td><td>Fee applies at other banks' ATMs</td></tr><tr><td>Citi</td><td>$2.50</td><td>$1,500</td><td>Fee applies at other banks' ATMs</td></tr><tr><td>U.S. Bank</td><td>$2.50</td><td>$500</td><td>Fee applies at other banks' ATMs</td></tr><tr><td>PNC Bank</td><td>$3.00</td><td>$500</td><td>Fee applies at other banks' ATMs</td></tr><tr><td>Capital One</td><td>$0.00</td><td>$1,000</td><td>No out-of-network fee at Capital One ATMs</td></tr><tr><td>TD Bank</td><td>$3.00</td><td>$750</td><td>Fee applies at other banks' ATMs</td></tr></tbody>
+    </table></div>
+    <p class="note">Estimates only. Some accounts (premium, student, or military) have different fees and higher limits. Many banks also reimburse out-of-network fees up to a monthly cap — ask yours.</p>
+  </section>
+
+  <section id="guides" class="wrap">
+    <h2><span class="bar">|</span> ATM guides</h2>
+    <p class="section-sub">Practical guides to finding ATMs, avoiding fees, and using cash machines safely.</p>
+    <div class="guide-grid">
+      <div class="guide"><p class="g-tag">Guide</p><h3>How to find an ATM near you</h3><p>Maps, bank apps and simple tricks to locate the nearest working ATM in seconds.</p><p class="guide-link"><a href="guides/how-to-find-an-atm-near-you.html">Read the guide →</a></p></div>
+      <div class="guide"><p class="g-tag">Guide</p><h3>How to avoid ATM fees</h3><p>Free networks, cashback at stores, and planning withdrawals that cost you nothing.</p><p class="guide-link"><a href="guides/how-to-avoid-atm-fees.html">Read the guide →</a></p></div>
+      <div class="guide"><p class="g-tag">Guide</p><h3>ATM safety tips</h3><p>Skimmers, shoulder surfing and PIN safety — the habits that keep your money safe.</p><p class="guide-link"><a href="guides/atm-safety-tips.html">Read the guide →</a></p></div>
+      <div class="guide"><p class="g-tag">Guide</p><h3>What to do if an ATM keeps your card</h3><p>Stay calm, call your bank, and get a replacement — step by step.</p><p class="guide-link"><a href="guides/what-to-do-if-an-atm-keeps-your-card.html">Read the guide →</a></p></div>
+      <div class="guide"><p class="g-tag">Guide</p><h3>Using ATMs abroad</h3><p>Exchange rates, foreign fees and why you should always decline currency conversion.</p><p class="guide-link"><a href="guides/using-atms-abroad.html">Read the guide →</a></p></div>
+      <div class="guide"><p class="g-tag">Guide</p><h3>Mobile banking vs ATMs</h3><p>When an app can replace a cash machine — and when only cash will do.</p><p class="guide-link"><a href="guides/mobile-banking-vs-atms.html">Read the guide →</a></p></div>
+    </div>
+  </section>
+
+  <section id="faq" class="wrap">
+    <h2><span class="bar">|</span> Frequently asked questions</h2>
+    <p class="section-sub">Quick answers to the most common ATM questions.</p>
+    <div class="faq">
+      <div class="faq-item"><button>How much does an out-of-network ATM cost? <span class="chev">+</span></button><div class="answer">In the US, the average out-of-network ATM fee is around $3–$3.50 charged by the ATM operator, and your own bank may add another $2–$3 on top. Using your own bank's ATM is usually free.</div></div>
+      <div class="faq-item"><button>How do I find the nearest ATM? <span class="chev">+</span></button><div class="answer">Search "ATM near me" in Google Maps or Apple Maps, use your bank's app ATM locator, or look for ATMs inside grocery stores, pharmacies and gas stations — many are free to use.</div></div>
+      <div class="faq-item"><button>What is the daily ATM withdrawal limit? <span class="chev">+</span></button><div class="answer">Most US banks set daily ATM limits between $500 and $1,500, depending on the bank and account type. Check the reference table above or ask your bank — you can often request a temporary increase.</div></div>
+      <div class="faq-item"><button>Can I use my debit card at an ATM abroad? <span class="chev">+</span></button><div class="answer">Yes, if your card is on a major network (Visa, Mastercard). You will usually pay a foreign transaction fee of 1–3% plus the local ATM fee. Always choose to be charged in the local currency, not in dollars.</div></div>
+      <div class="faq-item"><button>What should I do if an ATM gives me the wrong amount? <span class="chev">+</span></button><div class="answer">Keep the receipt, note the ATM's location, time and amount, and contact your bank right away. Banks can check the machine's records and usually correct the error within a few business days.</div></div>
+      <div class="faq-item"><button>Is it safe to use an ATM at night? <span class="chev">+</span></button><div class="answer">Prefer well-lit ATMs inside bank branches or busy stores. Avoid isolated machines late at night, cover the keypad when entering your PIN, and leave immediately if anything feels wrong.</div></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="about">
+      <h2 style="font-size:20px;margin-bottom:10px">About ATM Near Me</h2>
+      <p>ATM Near Me is a free website with tools and guides to help you find an ATM near you, understand withdrawal fees and limits, and use cash machines safely. Our goal is to save you money on fees and help you get cash when you need it.</p>
+      <p>All content is original and provided for general information only. We are not a bank and do not provide financial advice.</p>
+    </div>
+    <div class="disclaimer"><strong>Note:</strong> Fees and limits shown are approximate estimates based on publicly listed figures and can change at any time. Always check with your bank or the ATM on screen before withdrawing cash.</div>
+  </section>
+</main>
+
+<script>
+function $(id){return document.getElementById(id)}
+function show(id){$(id).classList.add('show')}
+function money(n){return '$'+n.toFixed(2)}
+// 1. ATM Fee Calculator
+function calcFee(){
+  var amt=parseFloat($('fee-amt').value), fee=parseFloat($('fee-fee').value);
+  if(!(amt>0)||!(fee>=0)){alert('Enter a valid amount and fee.');return}
+  var total=amt+fee, pct=fee/amt*100;
+  $('fee-total').textContent=money(total);
+  $('fee-feeout').textContent=money(fee);
+  $('fee-pct').textContent=pct.toFixed(2)+'%';
+  var v=$('fee-verdict');
+  if(fee===0){v.className='verdict ok';v.textContent='No fee — this is the cheapest way to get cash.'}
+  else if(pct<=1){v.className='verdict ok';v.textContent='Low fee: only '+pct.toFixed(2)+'% of your withdrawal.'}
+  else if(pct<=3){v.className='verdict warn';v.textContent='Moderate fee. Withdrawing more at once would lower the percentage.'}
+  else{v.className='verdict bad';v.textContent='High fee relative to the amount. Consider withdrawing more, or finding a free ATM.'}
+  show('fee-results');
+}
+// 2. Cash Withdrawal Planner
+function calcPlan(){
+  var need=parseFloat($('plan-need').value), per=parseFloat($('plan-per').value), fee=parseFloat($('plan-fee').value);
+  if(!(need>0)||!(per>0)||!(fee>=0)){alert('Enter valid numbers.');return}
+  var trips=Math.ceil(need/per), totalFees=trips*fee, cash=trips*per;
+  $('plan-trips').textContent=trips;
+  $('plan-cash').textContent=money(cash);
+  $('plan-fees').textContent=money(totalFees);
+  var v=$('plan-verdict');
+  if(totalFees===0){v.className='verdict ok';v.textContent='No fees at all — nice plan.'}
+  else{v.className='verdict ok';v.textContent=trips+' withdrawal(s) of '+money(per)+' cover your '+money(need)+' monthly cash need for '+money(totalFees)+' in fees.'}
+  show('plan-results');
+}
+// 3. Travel Currency Converter
+function calcFx(){
+  var amt=parseFloat($('fx-amt').value), rate=parseFloat($('fx-rate').value), feePct=parseFloat($('fx-feepct').value);
+  if(!(amt>0)||!(rate>0)||!(feePct>=0)){alert('Enter valid numbers.');return}
+  var converted=amt*rate, fee=converted*feePct/100, total=converted+fee;
+  $('fx-converted').textContent=converted.toFixed(2);
+  $('fx-fee').textContent=fee.toFixed(2);
+  $('fx-total').textContent=total.toFixed(2);
+  var v=$('fx-verdict');
+  if(feePct===0){v.className='verdict ok';v.textContent='No foreign transaction fee — you get the full converted amount.'}
+  else{v.className='verdict warn';v.textContent='The foreign fee adds '+fee.toFixed(2)+' to your withdrawal. A no-fee travel card could save this.'}
+  show('fx-results');
+}
+// 4. ATM Safety Checklist
+var SAFETY=[['I checked for loose parts, hidden cameras or anything odd on the card slot','Skimmers sit on top of the real card reader.'],['I covered the keypad with my hand while entering my PIN','Shoulder surfing and hidden cameras are the most common tricks.'],['I am using an ATM inside a bank branch or a well-lit public place','Indoor and busy locations are much safer than isolated machines.'],['No one is standing close behind me','Ask for space or walk away if someone crowds you.'],['I will take my card and receipt and check my balance later','Always confirm the transaction and keep the receipt.'],['I will never accept help from a stranger at an ATM','"Helpful" strangers are a classic scam setup.'],['I checked that the cash amount matches what I requested','Count your cash before leaving the machine.'],['My phone is in my pocket, not in my hand','Stay alert to your surroundings while withdrawing.']];
+(function(){
+  var box=document.getElementById('safe-list');
+  if(!box)return;
+  SAFETY.forEach(function(s,i){
+    var li=document.createElement('li');
+    li.innerHTML='<label><input type="checkbox" data-safe="'+i+'"> <strong>'+s[0]+'</strong> — '+s[1]+'</label>';
+    box.appendChild(li);
+  });
+  box.addEventListener('change',function(){
+    var c=box.querySelectorAll('input:checked').length, pct=Math.round(c/SAFETY.length*100);
+    document.getElementById('safe-score').textContent='Safety score: '+pct+'% ('+c+' of '+SAFETY.length+' checked)';
+    var v=document.getElementById('safe-verdict');
+    if(pct<50){v.className='verdict bad';v.textContent='Low safety score. Review the unchecked items before using an ATM.'}
+    else if(pct<100){v.className='verdict warn';v.textContent='Almost there — check the remaining items to stay fully safe.'}
+    else{v.className='verdict ok';v.textContent='Perfect score. You are following every safety step.'}
+  });
+})();
+// 5. Bank vs ATM Comparison
+function calcCompare(){
+  var amt=parseFloat($('cmp-amt').value);
+  var sel=$('cmp-bank').value.split('|');
+  var ownFee=parseFloat(sel[0]), limit=parseFloat(sel[1]), name=sel[2];
+  var oonFee=parseFloat($('cmp-oon').value);
+  if(!(amt>0)||!(oonFee>=0)){alert('Enter a valid amount and fee.');return}
+  var ownTotal=amt+ownFee, oonTotal=amt+oonFee, save=oonTotal-ownTotal;
+  $('cmp-own').textContent=money(ownTotal);
+  $('cmp-oon-out').textContent=money(oonTotal);
+  $('cmp-save').textContent=money(Math.abs(save));
+  $('cmp-limit').textContent='$'+limit.toLocaleString('en-US');
+  var v=$('cmp-verdict');
+  if(amt>limit){v.className='verdict bad';v.textContent='Your withdrawal of '+money(amt)+' exceeds the '+money(limit)+' daily limit at '+name+'. Split it across days or visit a branch.'}
+  else if(save>0){v.className='verdict ok';v.textContent='Using your own bank saves you '+money(save)+' per withdrawal compared to an out-of-network ATM.'}
+  else if(save===0){v.className='verdict warn';v.textContent='Both options cost the same for this amount.'}
+  else{v.className='verdict warn';v.textContent='Unusually, the out-of-network option is cheaper here. Double-check the fees.'}
+  show('cmp-results');
+}
+// FAQ accordion
+document.querySelectorAll('.faq-item button').forEach(function(b){
+  b.addEventListener('click',function(){b.parentElement.classList.toggle('open')});
+});
+</script>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>ATM Near Me</h4>
+        <p>Free tools and guides to find an ATM near you, compare fees and withdrawal limits, and use cash machines safely at home and abroad.</p>
+        <p>Fees and limits shown are approximate estimates based on publicly listed figures and can change at any time. Always check with your bank or the ATM on screen before withdrawing cash.</p>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="guides/how-to-find-an-atm-near-you.html">How to find an ATM near you</a></li>
+          <li><a href="guides/how-to-avoid-atm-fees.html">How to avoid ATM fees</a></li>
+          <li><a href="guides/atm-safety-tips.html">ATM safety tips</a></li>
+          <li><a href="guides/what-to-do-if-an-atm-keeps-your-card.html">ATM keeps your card</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="#tools">ATM Fee Calculator</a></li>
+          <li><a href="#tools">Cash Withdrawal Planner</a></li>
+          <li><a href="#tools">Travel Currency Converter</a></li>
+          <li><a href="#tools">ATM Safety Checklist</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="copy">© 2026 ATM Near Me — Fees and limits are approximate estimates.</p>
+  </div>
+</footer>
+</body>
+</html>
